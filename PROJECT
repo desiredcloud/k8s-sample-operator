@@ -1,0 +1,33 @@
+componentConfig: true
+domain: desiredcloud.com
+layout:
+- go.kubebuilder.io/v3
+- declarative.go.kubebuilder.io/v1
+- grafana.kubebuilder.io/v1-alpha
+plugins:
+  deploy-image.go.kubebuilder.io/v1-alpha:
+    resources:
+    - domain: desiredcloud.com
+      group: image
+      kind: ImagePlugin
+      options:
+        containerCommand: memcached,-m=64,modern,-v
+        image: memcached:1.4.36-alpine
+        runAsUser: "1001"
+      version: v1alpha1
+  grafana.kubebuilder.io/v1-alpha: {}
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: k8s-sample-operator
+repo: github.com/desiredcloud/k8s-sample-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: desiredcloud.com
+  group: image
+  kind: ImagePlugin
+  path: github.com/desiredcloud/k8s-sample-operator/api/v1alpha1
+  version: v1alpha1
+version: "3"
